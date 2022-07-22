@@ -1,8 +1,11 @@
-const webpack = require('webpack')
-const { parsed: myEnv } = require('dotenv').config()
+require("dotenv").config();
+const webpack = require("webpack");
+
 module.exports = {
-    webpack(config) {
-        config.plugins.push(new webpack.EnvironmentPlugin(myEnv))
-        return config
-    }
-}
+  webpack(config) {
+    return config;
+  },
+  env: {
+    OP_kEY: process.env.OP_kEY,
+  },
+};
