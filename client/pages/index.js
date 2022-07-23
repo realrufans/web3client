@@ -6,15 +6,23 @@ import axios from "axios";
 import Loader from "react-loader-spinner";
 import NFT from "../utils/EternalNFT.json";
 
-const mint = () => {
+export const getServerSideProps = async () => {
+
+  const a = await fetch("http://localhost:3000/api/hello");
+  const data = await a.json();
+
+  return {
+    props: { data },
+  };
+};
+const mint = ({ data }) => {
   const [mintedNFT, setMintedNFT] = useState(null);
   const [miningStatus, setMiningStatus] = useState(null);
   const [loadingState, setLoadingState] = useState(0);
   const [txError, setTxError] = useState(null);
   const [currentAccount, setCurrentAccount] = useState("");
   const [correctNetwork, setCorrectNetwork] = useState(false);
-
-  console.log( process.env.OP_kEY)
+  const [api, setApi] = useState(data.name);
 
   // Checks if wallet is connected
   const checkIfWalletIsConnected = async () => {
@@ -101,7 +109,7 @@ const mint = () => {
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = new ethers.Wallet(process.env.OP_kEY, provider);
+        const signer = new ethers.Wallet(api, provider);
         const nftContract = new ethers.Contract(
           nftContractAddress,
           NFT.abi,
@@ -140,7 +148,7 @@ const mint = () => {
 
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum);
-        const signer = new ethers.Wallet(process.env.OP_kEY, provider);
+        const signer = new ethers.Wallet(api, provider);
         const nftContract = new ethers.Contract(
           nftContractAddress,
           NFT.abi,
