@@ -8,7 +8,7 @@ import NFT from "../utils/EternalNFT.json";
 
 export const getServerSideProps = async () => {
 
-  const a = await fetch("http://localhost:3000/api/hello");
+  const a = await fetch("https://web3client-7x6zd1uah-realrufans.vercel.app/api/hello");
   const data = await a.json();
 
   return {
